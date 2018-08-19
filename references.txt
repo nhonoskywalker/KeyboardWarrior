@@ -1,2 +1,8 @@
 https://stackoverflow.com/questions/16839908/get-last-line-from-a-textarea-on-keypress
 https://github.com/topheman/vanilla-es6-jspm
+https://stackoverflow.com/questions/43747185/force-css-grid-container-to-fill-full-screen-of-device
+https://javascript.info/class
+https://www.w3schools.com/jsref/prop_html_id.asp
+https://www.w3schools.com/jsref/met_win_setinterval.asp
+https://www.w3schools.com/howto/howto_js_add_class.asp
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/values

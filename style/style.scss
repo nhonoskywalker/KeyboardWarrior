@@ -12,7 +12,7 @@ body{
 textarea {
     font-size: $globalFontSize*2;
     resize: none;
-    width: 300px; 
+    width: 100%; 
     height: $globalFontSize*3;
 }
 
@@ -30,9 +30,14 @@ textarea {
     .main{
         display: grid;
         grid-template-rows: 2fr 1fr;
-
-        .main-display{
+        min-width: 300px;
+        #main-display{
             background-color: blue;
+
+            .character-game-object{
+                color: white;
+                display: block;
+            }
         }
         .main-controls{
             
