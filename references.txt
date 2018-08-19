@@ -1,0 +1,2 @@
+https://stackoverflow.com/questions/16839908/get-last-line-from-a-textarea-on-keypress
+https://github.com/topheman/vanilla-es6-jspm
