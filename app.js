@@ -96,16 +96,21 @@ class CharacterSpawner{
 
         let element = document.getElementById("main-display");
         element.appendChild(para);
-        // let iterator = Pooler.ObjectMap.values();
-        // //practice on map
-        // for(const val of iterator){
-        //     if(val.Active == false){
-        //         val.Active = true;
-        //         val.Id = characters;
-        //         return val;
-        //     }
-        // }
-        return new Character(characters);
+
+        let _obj = null;
+        for(const obj of Pooler.ObjectSet.values()){
+            if(obj.Active == false){
+                obj.Active = true;
+                obj._id = characters;
+                _obj = obj;
+                break;
+            }
+            // console.log(obj.Id);
+        }
+        if(_obj == null){
+            Pooler.Pool(new Character(characters));
+        }
+        //return new Character(characters);
     }
 }
 
@@ -116,14 +121,14 @@ $(document).ready(function(){
     //start
     textToType = randomString();
     Manager._numberOfSpawn +=1;
-    Pooler.Pool(Spawner.Spawn(textToType));
+    Spawner.Spawn(textToType);
     textarea.value ="";
     
     //N update
     setInterval(function(){ 
         textToType = randomString();
         Manager._numberOfSpawn +=1;
-        Pooler.Pool(Spawner.Spawn(textToType));
+        Spawner.Spawn(textToType);
     }, Manager.GameSpeed);
    
 
@@ -138,32 +143,20 @@ $(document).ready(function(){
     });
 
     function checkAnswer(value){
-        //if value is in object pooler 
-        // if(Pooler.ObjectMap.has(value)){
-        //     if(Pooler.ObjectMap.get(value).Active){
-        //         Pooler.ObjectMap.get(value).Active = false;
-        //         //remove element
-        //         document.getElementById(value).remove();
-        //         console.log("Correct!");
-        //     }
-        //    else{
-        //         console.log("Wrong!");
-        //    }
-        // }else{
-        //     console.log("Wrong!");
-        // }
-
-        
-        // console.log(Pooler.ObjectSet);
+        let found = false;
+        console.log(Pooler.ObjectSet);
         for(const obj of Pooler.ObjectSet.values()){
             if(obj.Id == value && obj.Active){
                 obj.Active = false;
+                found = true;
                 console.log("correct!");
                 break;
             }
-            console.log(obj.Id);
+            // console.log(obj.Id);
         }
-        
+        if(!found){
+            console.log("wrong!");
+        }
     }
 
     function randomString(){
