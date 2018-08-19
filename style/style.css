@@ -1,10 +1,51 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
 body {
   background-color: black;
 }
 
 textarea {
+  font-size: 2em;
   resize: none;
   width: 300px;
-  height: 50px;
+  height: 3em;
+}
+
+.wrapper {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: minmax(300px, auto);
+  background-color: aqua;
+  justify-items: stretch;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  height: 100vh;
+}
+
+.wrapper .div:nth-child(2) {
+  background-color: red;
+}
+
+.wrapper .main {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 2fr 1fr;
+      grid-template-rows: 2fr 1fr;
+}
+
+.wrapper .main .main-display {
+  background-color: blue;
+}
+
+.wrapper .main .main-controls {
+  background-color: black;
 }
 /*# sourceMappingURL=style.css.map */

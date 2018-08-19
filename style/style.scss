@@ -1,10 +1,43 @@
 $bgColor: black;
+$globalFontSize: 1em;
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
 body{
     background-color: $bgColor;
 }
 
 textarea {
+    font-size: $globalFontSize*2;
     resize: none;
     width: 300px; 
-    height: 50px;
+    height: $globalFontSize*3;
+}
+
+.wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: minmax(300px, auto);
+    background-color: aqua;
+    justify-items: stretch;
+    align-items: stretch;
+    height: 100vh;
+    .div:nth-child(2){
+        background-color: red;
+    }
+    .main{
+        display: grid;
+        grid-template-rows: 2fr 1fr;
+
+        .main-display{
+            background-color: blue;
+        }
+        .main-controls{
+            
+            background-color: black;
+        }
+    }
+  
 }

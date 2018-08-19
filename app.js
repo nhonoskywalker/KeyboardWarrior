@@ -15,7 +15,6 @@ $(document).ready(function(){
             let lastLine = content.substr(content.lastIndexOf("\n")+1);
             console.log(lastLine + " " + textToType);
             checkAnswer(lastLine);
-           
         }
       
     });
