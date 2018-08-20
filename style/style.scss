@@ -5,6 +5,20 @@ $globalFontSize: 1em;
     padding: 0;
     margin: 0;
   }
+
+$iphone-5-se: 320px;
+$desktop: 1024px;
+$font-size: 1em;
+@mixin iphone-5-se {
+    @media (min-width: #{$iphone-5-se}){
+        @content;
+    } 
+}
+@mixin desktop {
+    @media (min-width: #{$desktop}){
+        @content;
+    } 
+}
 body{
     background-color: $bgColor;
 }
@@ -18,25 +32,58 @@ textarea {
 
 .wrapper{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 0fr 2fr 0fr;
     grid-auto-rows: minmax(300px, auto);
     background-color: aqua;
     justify-items: stretch;
     align-items: stretch;
     height: 100vh;
+  
     .div:nth-child(2){
         background-color: red;
     }
     .main{
         display: grid;
-        grid-template-rows: 2fr 1fr;
-        min-width: 300px;
-        #main-display{
-            background-color: blue;
 
+        grid-template-rows: 3fr 1fr;
+        width: 320px;
+        height: 568px;
+        align-self: center;
+        justify-self: center;
+        #main-display{
+            position: relative;
+            background-color: blue;
+            text-align: center;
             .character-game-object{
                 color: white;
                 display: block;
+                padding: 5px;
+                margin-right: 30%;
+            }
+
+            #hud{
+              
+                width: 100px;
+                height: 100%;
+                position: absolute;
+                right: 0;
+                
+                .container{
+                    text-align: left;
+                    padding: 5px;
+                    background-color: black;
+                    div{
+                        margin-top: 5px;
+                    }
+                }
+               
+                p{
+                    color: yellow;
+                    font-size: $font-size*1.2;
+                }
+                h4{
+                    color: white;
+                }
             }
         }
         .main-controls{

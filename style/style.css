@@ -19,8 +19,8 @@ textarea {
 .wrapper {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr 1fr 1fr;
-      grid-template-columns: 1fr 1fr 1fr;
+  -ms-grid-columns: 0fr 2fr 0fr;
+      grid-template-columns: 0fr 2fr 0fr;
   grid-auto-rows: minmax(300px, auto);
   background-color: aqua;
   justify-items: stretch;
@@ -37,18 +37,53 @@ textarea {
 .wrapper .main {
   display: -ms-grid;
   display: grid;
-  -ms-grid-rows: 2fr 1fr;
-      grid-template-rows: 2fr 1fr;
-  min-width: 300px;
+  -ms-grid-rows: 3fr 1fr;
+      grid-template-rows: 3fr 1fr;
+  width: 320px;
+  height: 568px;
+  -ms-grid-row-align: center;
+      align-self: center;
+  -ms-grid-column-align: center;
+      justify-self: center;
 }
 
 .wrapper .main #main-display {
+  position: relative;
   background-color: blue;
+  text-align: center;
 }
 
 .wrapper .main #main-display .character-game-object {
   color: white;
   display: block;
+  padding: 5px;
+  margin-right: 30%;
+}
+
+.wrapper .main #main-display #hud {
+  width: 100px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+}
+
+.wrapper .main #main-display #hud .container {
+  text-align: left;
+  padding: 5px;
+  background-color: black;
+}
+
+.wrapper .main #main-display #hud .container div {
+  margin-top: 5px;
+}
+
+.wrapper .main #main-display #hud p {
+  color: yellow;
+  font-size: 1.2em;
+}
+
+.wrapper .main #main-display #hud h4 {
+  color: white;
 }
 
 .wrapper .main .main-controls {

@@ -3,11 +3,25 @@ let textarea = document.getElementById("interactiveTextArea");
 let level = 5;
 let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 let textToType;
-
+let paused =false;
 class GameManager{
     constructor(){
         this._numberOfSpawn = 0;
-        this._gameSpeed = 3000;
+        this._gameSpeed = 500;
+        this._hit = 0;
+        this._miss = 0;
+    }
+    get Hit(){
+        return this._hit;
+    }
+    HitIncrease(){
+        this._hit++;
+    }
+    get Miss(){
+        return this._miss;
+    }
+    MissIncrease(){
+        this._miss++;
     }
     get GameSpeed(){
         return this._gameSpeed;
@@ -98,7 +112,7 @@ class CharacterSpawner{
         element.appendChild(para);
 
         let _obj = null;
-        for(const obj of Pooler.ObjectSet.values()){
+        for(const obj of pooler.ObjectSet.values()){
             if(obj.Active == false){
                 obj.Active = true;
                 obj._id = characters;
@@ -108,29 +122,89 @@ class CharacterSpawner{
             // console.log(obj.Id);
         }
         if(_obj == null){
-            Pooler.Pool(new Character(characters));
+            pooler.Pool(new Character(characters));
         }
         //return new Character(characters);
     }
 }
 
-let Manager = new GameManager();
-let Spawner = new CharacterSpawner(); 
-let Pooler = new ObjectPooler();
+class Timer{
+    constructor(countDownInSec){
+        this._tempCountDownInsec = countDownInSec;
+        this._countDownInSec = countDownInSec;
+        this._minutes = Math.floor(countDownInSec / 60);
+        this._seconds = countDownInSec - (this._minutes * 60);
+        this._start = false;
+    }
+
+    CountDown(){
+        //setInterval(function(){
+            this._countDownInSec = this._countDownInSec < 0? 0:this._countDownInSec -= 1;
+            if(this._countDownInSec >= 0){
+                this._minutes = Math.floor(this._countDownInSec / 60);
+                this._seconds = this._countDownInSec - (this._minutes * 60);
+            }else{
+                this._start = false;
+            }
+           
+            //console.log(this._countDownInSec);
+
+        //},1000);
+    }
+    Start(){
+        this._start = true;
+    }
+    Pause(){
+        this._start = false;
+    }
+    Reset(){
+        this._start = false;
+        this._countDownInSec = this._tempCountDownInsec;
+        this._minutes = Math.floor(countDownInSec / 60);
+        this._seconds = countDownInSec - (this._minutes * 60);
+    }
+    get Minutes(){
+        return this._minutes < 0? 0:this._minutes;
+    }
+    get Seconds(){
+        return this._seconds < 0? 0:this._seconds;
+    }
+    
+}
+
+let manager = new GameManager();
+let spawner = new CharacterSpawner(); 
+let pooler = new ObjectPooler();
+let timer = new Timer(4);
 $(document).ready(function(){
     //start
+    timer.Start = true;
     textToType = randomString();
-    Manager._numberOfSpawn +=1;
-    Spawner.Spawn(textToType);
+    manager._numberOfSpawn +=1;
+    spawner.Spawn(textToType);
     textarea.value ="";
     
     //N update
-    setInterval(function(){ 
-        textToType = randomString();
-        Manager._numberOfSpawn +=1;
-        Spawner.Spawn(textToType);
-    }, Manager.GameSpeed);
+    paused = true;
+    if(!paused){
+        setInterval(function(){ 
+            textToType = randomString();
+            manager._numberOfSpawn +=1;
+            spawner.Spawn(textToType);
+        }, manager.GameSpeed);
+    }
+   //timer 
+   if(timer.Start == true){
+        setInterval(function(){
+            timer.CountDown();
+            document.getElementById("timer").children[1].
+            textContent = (timer.Minutes < 10? "0":"") + "" + timer.Minutes + ":" + (timer.Seconds <10?"0":"") + timer.Seconds;
+        // console.log(timer.Minutes + ":" + timer.Seconds);
+        },1000);
+   }
    
+  
+    
 
     //keypress
     $(textarea).keypress(function(e){
@@ -144,17 +218,22 @@ $(document).ready(function(){
 
     function checkAnswer(value){
         let found = false;
-        console.log(Pooler.ObjectSet);
-        for(const obj of Pooler.ObjectSet.values()){
+        console.log(pooler.ObjectSet);
+        for(const obj of pooler.ObjectSet.values()){
             if(obj.Id == value && obj.Active){
                 obj.Active = false;
                 found = true;
+                document.getElementById(obj.Id).remove();
+                manager.HitIncrease();
+                document.getElementById("hit").children[1].textContent = manager.Hit;
                 console.log("correct!");
                 break;
             }
             // console.log(obj.Id);
         }
         if(!found){
+            manager.MissIncrease();
+            document.getElementById("miss").children[1].textContent = manager.Miss;
             console.log("wrong!");
         }
     }
