@@ -1,0 +1,34 @@
+{
+  "name": "keyboardwarrior",
+  "version": "1.0.0",
+  "description": "es6 and sass practice",
+  "private": true,
+  "main": "app.js",
+  "dependencies": {
+    "webpack-cli": "^3.1.0",
+    "webpack": "^4.17.0"
+  },
+  "devDependencies": {
+    "webpack-command": "^0.4.1",
+    "webpack-config": "^7.5.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --config webpack.config.js",
+    "dev": "webpack --mode development",
+    "build": "webpack src/js/app.js dist/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhono99/KeyboardWarrior.git"
+  },
+  "keywords": [
+    "web"
+  ],
+  "author": "nhono99",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nhono99/KeyboardWarrior/issues"
+  },
+  "homepage": "https://github.com/nhono99/KeyboardWarrior#readme"
+}

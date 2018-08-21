@@ -7,4 +7,12 @@ https://www.w3schools.com/jsref/met_win_setinterval.asp
 https://www.w3schools.com/howto/howto_js_add_class.asp
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/values
 https://stackoverflow.com/questions/3387427/remove-element-by-id
-https://www.w3schools.com/jsref/prop_element_children.asp
+https://www.w3schools.com/jsref/prop_element_children.asp\
+https://stackoverflow.com/questions/8043026/how-to-format-numbers-by-prepending-0-to-single-digit-numbers
+https://github.com/JeffreyWay/laravel-mix/issues/1613
+https://stackoverflow.com/questions/9484829/npm-cant-find-package-json
+https://www.youtube.com/watch?v=GU-2T7k9NfI
+https://webpack.js.org/concepts/mode/
+https://gist.github.com/learncodeacademy/25092d8f1daf5e4a6fd3
+https://github.com/webpack/docs/wiki/Configuration
+https://www.valentinog.com/blog/webpack-tutorial/
