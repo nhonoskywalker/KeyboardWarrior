@@ -15,40 +15,74 @@ $(document).ready(function(){
     let pooler = new ObjectPooler();
     let spawner = new CharacterSpawner(pooler); 
     let timer = new Timer(200);
+    let spawnIntervalId;
+    let timerIntervalId;
+    //let i =0; //check how many instance of function is running
+
     //set start program
     onStart();
 
-    function main(){
-       let i =0;
-          //update
-        if(!paused){
-            setInterval(function(){ 
-                i += 1;
-                console.log("instanceeu " + i);
+    //main
+    function startMainInterval(){
+        spawnIntervalId = setInterval(function(){
+            if(!paused){
+                //i += 1;
+                //console.log("instanceeu " + i);
                 textToType = randomString();
                 manager._numberOfSpawn +=1;
                 spawner.Spawn(textToType);
-            }, manager.GameSpeed);
-        }
-        //timer 
-        if(timer.Start == true){
-                setInterval(function(){
-                    timer.CountDown();
-                    document.getElementById("timer").children[1].
-                    textContent = (timer.Minutes < 10? "0":"") + "" + timer.Minutes + ":" + (timer.Seconds <10?"0":"") + timer.Seconds;
-                // console.log(timer.Minutes + ":" + timer.Seconds);
-                },1000);
-        }
+            } 
+            
+        }, manager.GameSpeed);
+            
+            //timer 
+        timerIntervalId =  setInterval(function(){
+            if(timer.Start == true){
+                timer.CountDown();
+                document.getElementById("timer").children[1].
+                textContent = (timer.Minutes < 10? "0":"") + "" + timer.Minutes + ":" + (timer.Seconds <10?"0":"") + timer.Seconds;
+            }
+        // console.log(timer.Minutes + ":" + timer.Seconds);
+        },1000);
     }
-  
-   
+    function stopMainInterval(){
+        if(spawnIntervalId != null){
+            clearInterval(spawnIntervalId);
+            clearInterval(timerIntervalId);
+            spawnIntervalId = 0;
+            timerIntervalId = 0;
+        }
+            
+    }
+    let keyLog = [];
     //keypress
     $(textarea).keypress(function(e){
+       
         if(e.which == 13){
             let content = this.value;
             let lastLine = content.substr(content.lastIndexOf("\n")+1);
             console.log("input: " + lastLine);
-            checkAnswer(lastLine);
+            keyLog = [];
+            //checkAnswer(lastLine);
+        }
+
+        if((e.which >= 65 && e.which <= 90) || (e.which >= 97 && e.which <= 122) || (e.which >= 49 && e.which<=57)){
+            //console.log(String.fromCharCode(e.which));
+            keyLog.push(String.fromCharCode(e.which));
+            for(let item of pooler.ObjectSet.values()){
+                // if(item.Id.includes(keyLog.join('')) && item.Active){
+                //     highLightText(item.Id);
+                // }
+              
+                for(let i=0; i<item.Id.length; i++){
+                 
+                    if(item.Id.charAt(i) == keyLog[i]){
+                        console.log("highlighting " + item.Id);
+                        highLightText(item.Id);
+                    }
+                }
+            }
+            console.log(keyLog.join(''));
         }
     });
 
@@ -73,7 +107,6 @@ $(document).ready(function(){
             console.log("wrong!");
         }
     }
-
     function randomString(){
         let arr=[];
         for(let i=0; i<level; i++){
@@ -82,7 +115,6 @@ $(document).ready(function(){
         return arr.join('');
      
     }
-
     function onStart(){
         timer.Start = false;
         paused = true;
@@ -93,14 +125,41 @@ $(document).ready(function(){
         document.getElementById("timer").children[1].
         textContent = (timer.Minutes < 10? "0":"") + "" + timer.Minutes + ":" + (timer.Seconds <10?"0":"") + timer.Seconds;
     }
+    function highLightText(elementId)
+    {
+        console.log("WUT? " + elementId);
+        var x = document.getElementById(elementId);
+        var txt = x.innerHTML;
+        var newText = "";
+        for(var i=0, l=txt.length; i<l; i++)
+        {
+            newText += '<span style="color:#'+getColor()+'">'+txt.charAt(i)+'</span>';
+        }
+        x.innerHTML = newText;
+        (highLightText = function() {
+           
+        })();
+    }
+    function getColor()
+    {
+        let colorString="";
+        for(let i=0;i<6;i++)
+        {
+            let num = Math.floor(Math.random()*17);
+            let hexNum = num.toString(16);
+            colorString += hexNum;
+        }
+        return colorString;
+    }
     //DOM events
     $("#ui-control-play").click(function() {
         paused = paused == true? false : true;
         timer.Start = timer.Start == true? false:true;
         console.log(paused + " "+ timer.Start);
         
-        //call main to 
-        main();
+       stopMainInterval();
+       startMainInterval();
+        
        
     });
 });

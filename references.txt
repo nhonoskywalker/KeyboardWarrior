@@ -22,3 +22,7 @@ https://ionicons.com/v2/
 http://api.jquery.com/toggle/
 https://api.jquery.com/hasclass/
 http://api.jquery.com/animate/
+https://stackoverflow.com/questions/27978093/press-button-to-start-code-and-press-it-to-stop
+http://jsfiddle.net/ky85J/1/
+http://www.asciitable.com/
+https://stackoverflow.com/questions/2297524/javascript-jquery-keypress-logging
