@@ -74,7 +74,7 @@ $(document).ready(function(){
                 //     highLightText(item.Id);
                 // }
               
-                for(let i=0; i<item.Id.length; i++){
+                for(let i=0; i<keyLog.length; i++){
                  
                     if(item.Id.charAt(i) == keyLog[i]){
                         console.log("highlighting " + item.Id);
@@ -85,7 +85,6 @@ $(document).ready(function(){
             console.log(keyLog.join(''));
         }
     });
-
     function checkAnswer(value){
         let found = false;
         console.log(pooler.ObjectSet);
@@ -128,16 +127,19 @@ $(document).ready(function(){
     function highLightText(elementId)
     {
         console.log("WUT? " + elementId);
-        var x = document.getElementById(elementId);
-        var txt = x.innerHTML;
-        var newText = "";
-        for(var i=0, l=txt.length; i<l; i++)
-        {
-            newText += '<span style="color:#'+getColor()+'">'+txt.charAt(i)+'</span>';
-        }
-        x.innerHTML = newText;
+        let x = document.getElementById(elementId);
+      
+        //this causes the bug
+        //span is getting added every keypress
+        //get x span:nth-child(n)
         (highLightText = function() {
-           
+            let txt = x.innerHTML;
+            let newText = "";
+            for(let i=0; i<elementId.length; i++)
+            {
+                newText += '<span style="color:#'+getColor()+'">'+txt.charAt(i)+'</span>';
+            }
+            x.innerHTML = newText;
         })();
     }
     function getColor()

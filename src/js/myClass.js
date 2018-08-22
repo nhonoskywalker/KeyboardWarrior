@@ -95,7 +95,7 @@ export class CharacterSpawner{
     }
    
      Spawn(characters) {
-    
+        //change this to span
         let para = document.createElement("p");
         let node = document.createTextNode(characters);
         para.classList.add("character-game-object");
