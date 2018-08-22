@@ -139,6 +139,7 @@ export class Timer{
                 this._seconds = this._countDownInSec - (this._minutes * 60);
             }else{
                 this._start = false;
+                //add listener
             }
            
             //console.log(this._countDownInSec);

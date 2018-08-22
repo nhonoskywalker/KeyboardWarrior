@@ -89,4 +89,9 @@ textarea {
 .wrapper .main .main-controls {
   background-color: black;
 }
+
+.clip {
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
 /*# sourceMappingURL=style.css.map */
