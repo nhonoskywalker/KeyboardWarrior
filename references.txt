@@ -17,3 +17,8 @@ https://gist.github.com/learncodeacademy/25092d8f1daf5e4a6fd3
 https://github.com/webpack/docs/wiki/Configuration
 https://www.valentinog.com/blog/webpack-tutorial/
 https://css-tricks.com/clipping-masking-css/
+https://fonts.google.com/?category=Monospace&selection.family=Cutive+Mono
+https://ionicons.com/v2/
+http://api.jquery.com/toggle/
+https://api.jquery.com/hasclass/
+http://api.jquery.com/animate/

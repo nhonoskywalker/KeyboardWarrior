@@ -1,41 +1,46 @@
 import {GameManager, ObjectPooler, GameObject, Character, CharacterSpawner, Timer} from './myClass';
 
 
-let textarea = document.getElementById("interactiveTextArea");
-let level = 5;
-let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-let textToType;
-let paused =false;
+
 
 $(document).ready(function(){
-    console.log("loaded!");
+    //enable
+    let textarea = document.getElementById("interactiveTextArea");
+    let level = 5;
+    let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
+    let textToType;
+    let paused = true;
     //init
     let manager = new GameManager();
     let pooler = new ObjectPooler();
     let spawner = new CharacterSpawner(pooler); 
-    let timer = new Timer(4);
+    let timer = new Timer(200);
     //set start program
     onStart();
-  
-    
-    //update
-    // paused = true;
-    if(!paused){
-        setInterval(function(){ 
-            textToType = randomString();
-            manager._numberOfSpawn +=1;
-            spawner.Spawn(textToType);
-        }, manager.GameSpeed);
+
+    function main(){
+       let i =0;
+          //update
+        if(!paused){
+            setInterval(function(){ 
+                i += 1;
+                console.log("instanceeu " + i);
+                textToType = randomString();
+                manager._numberOfSpawn +=1;
+                spawner.Spawn(textToType);
+            }, manager.GameSpeed);
+        }
+        //timer 
+        if(timer.Start == true){
+                setInterval(function(){
+                    timer.CountDown();
+                    document.getElementById("timer").children[1].
+                    textContent = (timer.Minutes < 10? "0":"") + "" + timer.Minutes + ":" + (timer.Seconds <10?"0":"") + timer.Seconds;
+                // console.log(timer.Minutes + ":" + timer.Seconds);
+                },1000);
+        }
     }
-   //timer 
-   if(timer.Start == true){
-        setInterval(function(){
-            timer.CountDown();
-            document.getElementById("timer").children[1].
-            textContent = (timer.Minutes < 10? "0":"") + "" + timer.Minutes + ":" + (timer.Seconds <10?"0":"") + timer.Seconds;
-        // console.log(timer.Minutes + ":" + timer.Seconds);
-        },1000);
-   }
+  
    
     //keypress
     $(textarea).keypress(function(e){
@@ -79,13 +84,23 @@ $(document).ready(function(){
     }
 
     function onStart(){
-        timer.Start = true;
-        textToType = randomString();
-        manager._numberOfSpawn +=1;
-        spawner.Spawn(textToType);
+        timer.Start = false;
+        paused = true;
+        // textToType = randomString();
+        // manager._numberOfSpawn +=1;
+        // spawner.Spawn(textToType);
         textarea.value ="";
         document.getElementById("timer").children[1].
         textContent = (timer.Minutes < 10? "0":"") + "" + timer.Minutes + ":" + (timer.Seconds <10?"0":"") + timer.Seconds;
     }
-
+    //DOM events
+    $("#ui-control-play").click(function() {
+        paused = paused == true? false : true;
+        timer.Start = timer.Start == true? false:true;
+        console.log(paused + " "+ timer.Start);
+        
+        //call main to 
+        main();
+       
+    });
 });
