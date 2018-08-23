@@ -1,10 +1,20 @@
 import {GameManager, ObjectPooler, GameObject, Character, CharacterSpawner, Timer} from './myClass';
 
-
 $(document).ready(function(){
+    let settings = {
+        normalFontWeight: 400, 
+        activeFontWeight: 900, 
+        normalGameObjectCharacterColor: "#535353",
+        activeGameObjectCharacterColor: "green",
+        normalFontSize: 1.2,
+        activeFontSize: 1.5,
+        spawnSpeed: 3000,
+        timerInSeconds: 200,
+        maxNumOfCharacters: 5
+    };
+    
     //enable
     let textarea = document.getElementById("interactiveTextArea");
-    let level = 5;
     let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
     let textToType;
     let paused = true;
@@ -12,18 +22,14 @@ $(document).ready(function(){
     let manager = new GameManager();
     let pooler = new ObjectPooler();
     let spawner = new CharacterSpawner(pooler); 
-    let timer = new Timer(200);
+    let timer = new Timer(settings.timerInSeconds);
     let spawnIntervalId;
     let timerIntervalId;
-    let testCase = ["AbCde","AxCxx","qwert","qxert"];
-    //let i =0; //check how many instance of function is running
-
+    let keyLog = [];
+   
     //set start program
     onStart();
-    spawner.Spawn(testCase[0]);
-    spawner.Spawn(testCase[1]);
-    spawner.Spawn(testCase[2]);
-    spawner.Spawn(testCase[3]);
+   
     //main
     function startMainInterval(){
         spawnIntervalId = setInterval(function(){
@@ -56,7 +62,7 @@ $(document).ready(function(){
         }
             
     }
-    let keyLog = [];
+    
   
     //keypress
     $(textarea).keyup(function(e){
@@ -65,8 +71,8 @@ $(document).ready(function(){
             if(keyLog.length > 0){
                 for(let item of pooler.ObjectSet.values()){
                     for(let i=0; i<keyLog.length; i++){
-                        if(item.Id.charAt(i) == keyLog[i]){
-                            highLightText(item.Id,keyLog.length-1,"#535353", 400, 1.2);
+                        if(item.Id.substr(0, keyLog.length) == keyLog.join('')){
+                            highLightText(item.Id,keyLog.length-1, settings.normalGameObjectCharacterColor, settings.normalFontWeight, settings.normalFontSize);
                         }
                     }
                 }
@@ -85,15 +91,14 @@ $(document).ready(function(){
         }
 
         if((e.which >= 65 && e.which <= 90) || (e.which >= 97 && e.which <= 122) || (e.which >= 49 && e.which<=57)){
-            // console.log("code " + e.which);
-            //console.log("pushing " + String.fromCodePoint(e.which));
+        
             keyLog.push(String.fromCodePoint(e.which));
             for(let item of pooler.ObjectSet.values()){
                 for(let i=0; i<keyLog.length; i++){
                     if(item.Id.substr(0, keyLog.length) == keyLog.join('')){
-                        highLightText(item.Id,i,"green", 900, 1.5);
+                        highLightText(item.Id,i,settings.activeGameObjectCharacterColor, settings.activeFontWeight, settings.activeFontSize);
                     }else{
-                        highLightText(item.Id,i,"#535353", 400, 1.2);
+                        highLightText(item.Id,i,settings.normalGameObjectCharacterColor, settings.normalFontWeight, settings.normalFontSize);
                     }
                 }
             }
@@ -123,7 +128,7 @@ $(document).ready(function(){
     }
     function randomString(){
         let arr=[];
-        for(let i=0; i<level; i++){
+        for(let i=0; i<settings.maxNumOfCharacters; i++){
            arr.push(characters.charAt(Math.floor(Math.random() * characters.length)));
         }
         return arr.join('');
@@ -132,9 +137,7 @@ $(document).ready(function(){
     function onStart(){
         timer.Start = false;
         paused = true;
-        // textToType = randomString();
-        // manager._numberOfSpawn +=1;
-        // spawner.Spawn(textToType);
+        manager.GameSpeed = settings.spawnSpeed;
         textarea.value ="";
         document.getElementById("timer").children[1].
         textContent = (timer.Minutes < 10? "0":"") + "" + timer.Minutes + ":" + (timer.Seconds <10?"0":"") + timer.Seconds;
@@ -153,7 +156,7 @@ $(document).ready(function(){
     $("#ui-control-play").click(function() {
         paused = paused == true? false : true;
         timer.Start = timer.Start == true? false:true;
-        console.log(paused + " "+ timer.Start);
+        //console.log(paused + " "+ timer.Start);
         
        stopMainInterval();
        startMainInterval();

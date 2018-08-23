@@ -62,30 +62,16 @@ export class Character extends GameObject{
 }
 export class ObjectPooler{
     constructor(){
-        // this._objectsMap = new Map();
         this._setObject = new Set();
-        // this._arrObject = [];
     }
-    // get ArrayObject(){
-    //     return this._arrObject;
-    // }
-    // set ArrayObject(value){
-    //     this._arrObject = value;
-    // }
+  
     get ObjectSet(){
         return this._setObject;
     }
     set ObjectSet(value){
         this._setObject = value;
     }
-    // get ObjectMap(){
-    //     return this._objectsMap;
-    // }
-    // set ObjectMap(value){
-    //     this._objectsMap = value;
-    // }
     Pool(character){
-        //this._objectsMap.set(character.Id, character);
         this._setObject.add(character);
     }
 }
@@ -119,12 +105,10 @@ export class CharacterSpawner{
                 _obj = obj;
                 break;
             }
-            // console.log(obj.Id);
         }
         if(_obj == null){
             this._pooler.Pool(new Character(characters));
         }
-        //return new Character(characters);
     }
 }
 export class Timer{
