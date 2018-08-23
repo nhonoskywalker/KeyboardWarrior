@@ -104,6 +104,7 @@ export class CharacterSpawner{
             let span = document.createElement("span");
             let node = document.createTextNode(characters.charAt(i)); 
             span.appendChild(node);
+            span.style.color = "#535353";
             para.appendChild(span);  
         }
        

@@ -55,7 +55,24 @@ $(document).ready(function(){
             
     }
     let keyLog = [];
+  
     //keypress
+    $(textarea).keyup(function(e){
+        if(e.which == 8){
+            console.log("8");
+            if(keyLog.length > 0){
+                for(let item of pooler.ObjectSet.values()){
+                    for(let i=0; i<keyLog.length; i++){
+                        if(item.Id.charAt(i) == keyLog[i]){
+                          
+                            highLightText(item.Id,keyLog.length-1,"#535353");
+                        }
+                    }
+                }
+                keyLog.pop();
+            }
+        }
+    });
     $(textarea).keypress(function(e){
        
         if(e.which == 13){
@@ -67,14 +84,15 @@ $(document).ready(function(){
         }
 
         if((e.which >= 65 && e.which <= 90) || (e.which >= 97 && e.which <= 122) || (e.which >= 49 && e.which<=57)){
-            //console.log(String.fromCharCode(e.which));
-            keyLog.push(String.fromCharCode(e.which));
+            // console.log("code " + e.which);
+            console.log("pushing " + String.fromCodePoint(e.which));
+            keyLog.push(String.fromCodePoint(e.which));
             for(let item of pooler.ObjectSet.values()){
                 for(let i=0; i<keyLog.length; i++){
                  
                     if(item.Id.charAt(i) == keyLog[i]){
-                        console.log("highlighting " + item.Id);
-                        highLightText(item.Id);
+                       
+                        highLightText(item.Id,i,"green");
                     }
                 }
             }
@@ -120,35 +138,37 @@ $(document).ready(function(){
         document.getElementById("timer").children[1].
         textContent = (timer.Minutes < 10? "0":"") + "" + timer.Minutes + ":" + (timer.Seconds <10?"0":"") + timer.Seconds;
     }
-    function highLightText(elementId)
+    function highLightText(elementId, index, color)
     {
-        console.log("WUT? " + elementId);
-        let x = document.getElementById(elementId);
-      
+        // console.log("WUT? " + elementId);
+        let objectElement = document.getElementById(elementId);
+        let span = objectElement.children[index]; //get p.span
+        span.style.color = color;
         //this causes the bug
         //span is getting added every keypress
         //get x span:nth-child(n)
-        (highLightText = function() {
-            let txt = x.innerHTML;
-            let newText = "";
-            for(let i=0; i<elementId.length; i++)
-            {
-                newText += '<span style="color:#'+getColor()+'">'+txt.charAt(i)+'</span>';
-            }
-            x.innerHTML = newText;
-        })();
+        //(highLightText = function() {
+            //let span = objectElement.children[index]; //get p.span
+            //span.style.color = "green";
+            //let newText = "";
+            // for(let i=0; i<elementId.length; i++)
+            // {
+            //     //newText += '<span style="color:#'+getColor()+'">'+txt.charAt(i)+'</span>';
+            // }
+            //objectElement.innerHTML = newText;
+        //})();
     }
-    function getColor()
-    {
-        let colorString="";
-        for(let i=0;i<6;i++)
-        {
-            let num = Math.floor(Math.random()*17);
-            let hexNum = num.toString(16);
-            colorString += hexNum;
-        }
-        return colorString;
-    }
+    // function getColor()
+    // {
+    //     let colorString="";
+    //     for(let i=0;i<6;i++)
+    //     {
+    //         let num = Math.floor(Math.random()*17);
+    //         let hexNum = num.toString(16);
+    //         colorString += hexNum;
+    //     }
+    //     return colorString;
+    // }
     //DOM events
     $("#ui-control-play").click(function() {
         paused = paused == true? false : true;
