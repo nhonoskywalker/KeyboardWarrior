@@ -1,8 +1,6 @@
 import {GameManager, ObjectPooler, GameObject, Character, CharacterSpawner, Timer} from './myClass';
 
 
-
-
 $(document).ready(function(){
     //enable
     let textarea = document.getElementById("interactiveTextArea");
@@ -17,11 +15,15 @@ $(document).ready(function(){
     let timer = new Timer(200);
     let spawnIntervalId;
     let timerIntervalId;
+    let testCase = ["AbCde","AxCxx","qwert","qxert"];
     //let i =0; //check how many instance of function is running
 
     //set start program
     onStart();
-
+    spawner.Spawn(testCase[0]);
+    spawner.Spawn(testCase[1]);
+    spawner.Spawn(testCase[2]);
+    spawner.Spawn(testCase[3]);
     //main
     function startMainInterval(){
         spawnIntervalId = setInterval(function(){
@@ -64,8 +66,7 @@ $(document).ready(function(){
                 for(let item of pooler.ObjectSet.values()){
                     for(let i=0; i<keyLog.length; i++){
                         if(item.Id.charAt(i) == keyLog[i]){
-                          
-                            highLightText(item.Id,keyLog.length-1,"#535353");
+                            highLightText(item.Id,keyLog.length-1,"#535353", 400, 1.2);
                         }
                     }
                 }
@@ -85,14 +86,14 @@ $(document).ready(function(){
 
         if((e.which >= 65 && e.which <= 90) || (e.which >= 97 && e.which <= 122) || (e.which >= 49 && e.which<=57)){
             // console.log("code " + e.which);
-            console.log("pushing " + String.fromCodePoint(e.which));
+            //console.log("pushing " + String.fromCodePoint(e.which));
             keyLog.push(String.fromCodePoint(e.which));
             for(let item of pooler.ObjectSet.values()){
                 for(let i=0; i<keyLog.length; i++){
-                 
-                    if(item.Id.charAt(i) == keyLog[i]){
-                       
-                        highLightText(item.Id,i,"green");
+                    if(item.Id.substr(0, keyLog.length) == keyLog.join('')){
+                        highLightText(item.Id,i,"green", 900, 1.5);
+                    }else{
+                        highLightText(item.Id,i,"#535353", 400, 1.2);
                     }
                 }
             }
@@ -138,37 +139,16 @@ $(document).ready(function(){
         document.getElementById("timer").children[1].
         textContent = (timer.Minutes < 10? "0":"") + "" + timer.Minutes + ":" + (timer.Seconds <10?"0":"") + timer.Seconds;
     }
-    function highLightText(elementId, index, color)
+    function highLightText(elementId, index, mycolor, font_weight, font_size)
     {
         // console.log("WUT? " + elementId);
         let objectElement = document.getElementById(elementId);
         let span = objectElement.children[index]; //get p.span
-        span.style.color = color;
-        //this causes the bug
-        //span is getting added every keypress
-        //get x span:nth-child(n)
-        //(highLightText = function() {
-            //let span = objectElement.children[index]; //get p.span
-            //span.style.color = "green";
-            //let newText = "";
-            // for(let i=0; i<elementId.length; i++)
-            // {
-            //     //newText += '<span style="color:#'+getColor()+'">'+txt.charAt(i)+'</span>';
-            // }
-            //objectElement.innerHTML = newText;
-        //})();
+        span.style.color = mycolor;
+        span.style.fontWeight = font_weight;
+        span.style.fontSize = font_size + "em";
     }
-    // function getColor()
-    // {
-    //     let colorString="";
-    //     for(let i=0;i<6;i++)
-    //     {
-    //         let num = Math.floor(Math.random()*17);
-    //         let hexNum = num.toString(16);
-    //         colorString += hexNum;
-    //     }
-    //     return colorString;
-    // }
+
     //DOM events
     $("#ui-control-play").click(function() {
         paused = paused == true? false : true;

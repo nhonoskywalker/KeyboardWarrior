@@ -1,7 +1,7 @@
 export class GameManager{
     constructor(){
         this._numberOfSpawn = 0;
-        this._gameSpeed = 500;
+        this._gameSpeed = 250;
         this._hit = 0;
         this._miss = 0;
     }
