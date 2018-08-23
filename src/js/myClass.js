@@ -95,15 +95,19 @@ export class CharacterSpawner{
     }
    
      Spawn(characters) {
-        //change this to span
-        let para = document.createElement("p");
-        let node = document.createTextNode(characters);
+        let display = document.getElementById("main-display");
+        let para = document.createElement("p"); //span container
         para.classList.add("character-game-object");
         para.id = characters;
-        para.appendChild(node);
-
-        let element = document.getElementById("main-display");
-        element.appendChild(para);
+       
+        for(let i=0; i<characters.length; i++){
+            let span = document.createElement("span");
+            let node = document.createTextNode(characters.charAt(i)); 
+            span.appendChild(node);
+            para.appendChild(span);  
+        }
+       
+        display.appendChild(para);
 
         let _obj = null;
       

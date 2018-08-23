@@ -63,17 +63,13 @@ $(document).ready(function(){
             let lastLine = content.substr(content.lastIndexOf("\n")+1);
             console.log("input: " + lastLine);
             keyLog = [];
-            //checkAnswer(lastLine);
+            checkAnswer(lastLine);
         }
 
         if((e.which >= 65 && e.which <= 90) || (e.which >= 97 && e.which <= 122) || (e.which >= 49 && e.which<=57)){
             //console.log(String.fromCharCode(e.which));
             keyLog.push(String.fromCharCode(e.which));
             for(let item of pooler.ObjectSet.values()){
-                // if(item.Id.includes(keyLog.join('')) && item.Active){
-                //     highLightText(item.Id);
-                // }
-              
                 for(let i=0; i<keyLog.length; i++){
                  
                     if(item.Id.charAt(i) == keyLog[i]){
