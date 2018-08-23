@@ -34,8 +34,6 @@ $(document).ready(function(){
     function startMainInterval(){
         spawnIntervalId = setInterval(function(){
             if(!paused){
-                //i += 1;
-                //console.log("instanceeu " + i);
                 textToType = randomString();
                 manager._numberOfSpawn +=1;
                 spawner.Spawn(textToType);
@@ -50,7 +48,6 @@ $(document).ready(function(){
                 document.getElementById("timer").children[1].
                 textContent = (timer.Minutes < 10? "0":"") + "" + timer.Minutes + ":" + (timer.Seconds <10?"0":"") + timer.Seconds;
             }
-        // console.log(timer.Minutes + ":" + timer.Seconds);
         },1000);
     }
     function stopMainInterval(){
@@ -63,12 +60,89 @@ $(document).ready(function(){
             
     }
     
-  
     //keypress
+    $(textarea).keydown(function(e){
+        backSpace(e, 37);
+        backSpace(e, 39);
+        if(e.keyCode === 8){
+            //do not use backspace button function
+            return false;
+        }
+        if(e.which == 37 || e.which == 39){
+            textarea.value = textarea.value.substr(0,textarea.value.length-1);
+            //focus caret on the end
+        }
+        if(e.which == 38 || e.which == 40){
+            textarea.value = "";
+            for(let item of pooler.ObjectSet.values()){
+                for(let i=0; i<keyLog.length; i++){
+                    //if keylog is greater
+                    if(item.Id.substr(0, keyLog.length > settings.maxNumOfCharacters? settings.maxNumOfCharacters:keyLog.length) == keyLog.join('')){
+                        highLightText(item.Id,i,settings.normalGameObjectCharacterColor, settings.normalFontWeight, settings.normalFontSize);
+                    }
+                }
+            }
+            keyLog = [];
+        }
+    });
+
+    
     $(textarea).keyup(function(e){
-        if(e.which == 8){
-            console.log("8");
+        // backSpace(e, 8);
+       
+    });
+    $(textarea).keypress(function(e){
+       
+        if(e.which == 13){
+            let content = this.value;
+            let lastLine = content.substr(content.lastIndexOf("\n")+1);
+            checkAnswer(lastLine);
+        }
+
+        if((e.which >= 65 && e.which <= 90) || (e.which >= 97 && e.which <= 122) || (e.which >= 49 && e.which<=57)){
+            try {
+                keyLog.push(String.fromCodePoint(e.which));
+                for(let item of pooler.ObjectSet.values()){
+                    for(let i=0; i<keyLog.length && item.Active; i++){
+                        if(item.Id.substr(0, keyLog.length) == keyLog.join('')){
+                            highLightText(item.Id,i,settings.activeGameObjectCharacterColor, settings.activeFontWeight, settings.activeFontSize);
+                        }else{
+                            highLightText(item.Id,i,settings.normalGameObjectCharacterColor, settings.normalFontWeight, settings.normalFontSize);
+                        }
+                    }
+                }
+                console.log(keyLog.join(''));
+            }
+            catch(err) {
+                //game object dom child looked into pooler object set where its dom is already removed
+                //or index is out of range
+                //game will continue
+                console.log(keyLog.join(''));
+                console.log("ERROR");
+                for(let item of pooler.ObjectSet.values()){
+                    if(item.Active){
+                        let _log = "";
+                        for(let i=0; i<item.Id.length; i++){
+                            _log += keyLog[i];
+                        }
+                        console.log("_log " + _log);
+                        if(item.Id == _log){
+                            for(let i=0; i<item.Id.length; i++){
+                                highLightText(item.Id,i,settings.normalGameObjectCharacterColor, settings.normalFontWeight, settings.normalFontSize);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    function backSpace(e, key){
+        if(e.which == key){
+            let content = textarea.value;
+            //let lastLine = content.substr(content.lastIndexOf("\n")+1);
             if(keyLog.length > 0){
+                //set game object dom last index to normal
                 for(let item of pooler.ObjectSet.values()){
                     for(let i=0; i<keyLog.length; i++){
                         if(item.Id.substr(0, keyLog.length) == keyLog.join('')){
@@ -78,36 +152,20 @@ $(document).ready(function(){
                 }
                 keyLog.pop();
             }
-        }
-    });
-    $(textarea).keypress(function(e){
-       
-        if(e.which == 13){
-            let content = this.value;
-            let lastLine = content.substr(content.lastIndexOf("\n")+1);
-            console.log("input: " + lastLine);
-            keyLog = [];
-            checkAnswer(lastLine);
-        }
-
-        if((e.which >= 65 && e.which <= 90) || (e.which >= 97 && e.which <= 122) || (e.which >= 49 && e.which<=57)){
-        
-            keyLog.push(String.fromCodePoint(e.which));
+            //set game object dom to active
             for(let item of pooler.ObjectSet.values()){
                 for(let i=0; i<keyLog.length; i++){
                     if(item.Id.substr(0, keyLog.length) == keyLog.join('')){
                         highLightText(item.Id,i,settings.activeGameObjectCharacterColor, settings.activeFontWeight, settings.activeFontSize);
-                    }else{
-                        highLightText(item.Id,i,settings.normalGameObjectCharacterColor, settings.normalFontWeight, settings.normalFontSize);
                     }
                 }
             }
-            console.log(keyLog.join(''));
+            
         }
-    });
+    }
     function checkAnswer(value){
         let found = false;
-        console.log(pooler.ObjectSet);
+        //console.log(pooler.ObjectSet);
         for(const obj of pooler.ObjectSet.values()){
             if(obj.Id == value && obj.Active){
                 obj.Active = false;
@@ -115,24 +173,49 @@ $(document).ready(function(){
                 document.getElementById(obj.Id).remove();
                 manager.HitIncrease();
                 document.getElementById("hit").children[1].textContent = manager.Hit;
+                keyLog = [];
                 console.log("correct!");
                 break;
             }
-            // console.log(obj.Id);
         }
         if(!found){
             manager.MissIncrease();
             document.getElementById("miss").children[1].textContent = manager.Miss;
+            //set game object dom to normal 
+            for(let item of pooler.ObjectSet.values()){
+                if(keyLog.length <= item.Id.length){
+                    if(item.Id.substr(0, keyLog.length) == keyLog.join('') && item.Active){
+                        for(let i=0; i<keyLog.length; i++){
+                            highLightText(item.Id,i,settings.normalGameObjectCharacterColor, settings.normalFontWeight, settings.normalFontSize);
+                        }
+                    }
+                }else{
+                    let _log;
+                    for(let i=0; i<item.Id.length; i++){
+                        _log += keyLog[i];
+                    }
+                    if(item.Id == _log && item.Active){
+                        for(let i=0; i<item.Id.length; i++){
+                            highLightText(item.Id,i,settings.normalGameObjectCharacterColor, settings.normalFontWeight, settings.normalFontSize);
+                        }
+                    }
+                }
+                
+              
+            }
             console.log("wrong!");
         }
+        //clear key log for new input line
+        keyLog = [];
     }
+
+   
     function randomString(){
         let arr=[];
         for(let i=0; i<settings.maxNumOfCharacters; i++){
            arr.push(characters.charAt(Math.floor(Math.random() * characters.length)));
         }
         return arr.join('');
-     
     }
     function onStart(){
         timer.Start = false;
@@ -145,6 +228,7 @@ $(document).ready(function(){
     function highLightText(elementId, index, mycolor, font_weight, font_size)
     {
         // console.log("WUT? " + elementId);
+       
         let objectElement = document.getElementById(elementId);
         let span = objectElement.children[index]; //get p.span
         span.style.color = mycolor;
@@ -156,8 +240,13 @@ $(document).ready(function(){
     $("#ui-control-play").click(function() {
         paused = paused == true? false : true;
         timer.Start = timer.Start == true? false:true;
-        //console.log(paused + " "+ timer.Start);
-        
+        //spawn first characeters
+        if(!paused && timer.Start == true){
+            textToType = randomString();
+            manager._numberOfSpawn +=1;
+            spawner.Spawn(textToType);
+        }
+       //restart intervals
        stopMainInterval();
        startMainInterval();
         
