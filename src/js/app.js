@@ -69,11 +69,11 @@ $(document).ready(function(){
             return false;
         }
         if(e.which == 37 || e.which == 39){
-            textarea.value = textarea.value.substr(0,textarea.value.length-1);
-            //focus caret on the end
+            this.value = this.value.substr(0,this.value.length-1);
+            
         }
         if(e.which == 38 || e.which == 40){
-            textarea.value = "";
+            this.value = "";
             for(let item of pooler.ObjectSet.values()){
                 for(let i=0; i<keyLog.length; i++){
                     //if keylog is greater
@@ -89,7 +89,14 @@ $(document).ready(function(){
     
     $(textarea).keyup(function(e){
         // backSpace(e, 8);
-       
+        if(e.which == 37){
+           //make caret always in the end of the text value
+            this.selectionEnd = this.selectionEnd + 1;
+            let del = this.value.substr(this.selectionEnd-1, 1);
+            this.value = this.value.substr(0,this.value.length-1);
+            this.selectionEnd = this.selectionEnd + 1;
+            this.value += del;
+        }
     });
     $(textarea).keypress(function(e){
        
