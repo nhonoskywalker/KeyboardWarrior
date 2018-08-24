@@ -66,4 +66,10 @@ $(document).ready(function(){
            
        });
     });
+  
+
+    //sample
+    // $('.modal-content').hide().fadeIn(800).delay(3000).fadeOut(800);
+
 });
+

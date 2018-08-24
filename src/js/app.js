@@ -26,10 +26,28 @@ $(document).ready(function(){
     let spawnIntervalId;
     let timerIntervalId;
     let keyLog = [];
-   
+ 
     //set start program
     onStart();
-   
+    
+    //IIFE
+    //fixed update
+    (function(){
+        //let arrObj = Array.from(pooler.ObjectSet);
+        setInterval(function(){
+            if(!paused){
+                if(Array.from(pooler.ObjectSet).filter(x => x.Active == true).length == 2){
+                    console.log("Game Over");
+                   
+                    gameOver();
+                    $("#gameover-screen").hide().fadeIn(800);
+                }
+                //console.log("Counteu " + Array.from(pooler.ObjectSet).filter(x => x.Active == true).length);
+         
+            } 
+            
+        }, 20); //every 0.02s
+    })();
     //main
     function startMainInterval(){
         spawnIntervalId = setInterval(function(){
@@ -59,13 +77,13 @@ $(document).ready(function(){
         }
             
     }
-    
     //keypress
     $(textarea).keydown(function(e){
         backSpace(e, 37);
         backSpace(e, 39);
         if(e.keyCode === 8){
             //do not use backspace button function
+            playAgain();
             return false;
         }
         if(e.which == 37 || e.which == 39){
@@ -86,7 +104,6 @@ $(document).ready(function(){
         }
     });
 
-    
     $(textarea).keyup(function(e){
         // backSpace(e, 8);
         if(e.which == 37){
@@ -98,6 +115,7 @@ $(document).ready(function(){
             this.value += del;
         }
     });
+
     $(textarea).keypress(function(e){
        
         if(e.which == 13){
@@ -144,6 +162,7 @@ $(document).ready(function(){
         }
     });
 
+    //app functions
     function backSpace(e, key){
         if(e.which == key){
             let content = textarea.value;
@@ -170,6 +189,7 @@ $(document).ready(function(){
             
         }
     }
+
     function checkAnswer(value){
         let found = false;
         //console.log(pooler.ObjectSet);
@@ -215,7 +235,6 @@ $(document).ready(function(){
         //clear key log for new input line
         keyLog = [];
     }
-
    
     function randomString(){
         let arr=[];
@@ -224,14 +243,7 @@ $(document).ready(function(){
         }
         return arr.join('');
     }
-    function onStart(){
-        timer.Start = false;
-        paused = true;
-        manager.GameSpeed = settings.spawnSpeed;
-        textarea.value ="";
-        document.getElementById("timer").children[1].
-        textContent = (timer.Minutes < 10? "0":"") + "" + timer.Minutes + ":" + (timer.Seconds <10?"0":"") + timer.Seconds;
-    }
+
     function highLightText(elementId, index, mycolor, font_weight, font_size)
     {
         // console.log("WUT? " + elementId);
@@ -243,7 +255,34 @@ $(document).ready(function(){
         span.style.fontSize = font_size + "em";
     }
 
+    function gameOver(){
+        let screen = document.getElementById("gameover-screen");
+        screen.style.display = "block";
+        timer.Start = false;
+        paused = true;
+       // screen.getElementsByClassName("modal").style.display = "block";
+      
+    }
+    function playAgain(){
+       //reload
+       location.reload();
+    }
+    //execution
+    function onStart(){
+        timer.Start = false;
+        paused = true;
+        manager.GameSpeed = settings.spawnSpeed;
+        textarea.disabled = true;
+        textarea.value ="";
+        document.getElementById("timer").children[1].
+        textContent = (timer.Minutes < 10? "0":"") + "" + timer.Minutes + ":" + (timer.Seconds <10?"0":"") + timer.Seconds;
+    }
+    
+
     //DOM events
+    $("#play-again").click(function(){
+        playAgain();
+    });
     $("#ui-control-play").click(function() {
         paused = paused == true? false : true;
         timer.Start = timer.Start == true? false:true;
@@ -252,6 +291,10 @@ $(document).ready(function(){
             textToType = randomString();
             manager._numberOfSpawn +=1;
             spawner.Spawn(textToType);
+            textarea.disabled = false;
+            textarea.focus();
+        }else{
+            textarea.disabled = true;
         }
        //restart intervals
        stopMainInterval();

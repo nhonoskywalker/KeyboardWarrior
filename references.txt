@@ -30,3 +30,6 @@ https://www.w3schools.com/js/js_htmldom_css.asp
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCodePoint
 https://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
 https://stackoverflow.com/questions/11266136/how-to-disable-the-backspace-key-for-anything-inside-body-except-inputs-and-te
+https://stackoverflow.com/questions/270493/how-would-you-make-two-divs-overlap
+https://stackoverflow.com/questions/5257923/how-to-load-local-script-files-as-fallback-in-cases-where-cdn-are-blocked-unavai
+https://stackoverflow.com/questions/17965956/how-to-get-element-by-class-name
