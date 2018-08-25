@@ -79,12 +79,12 @@ textarea {
   -webkit-box-shadow: 0px 2px 1px grey;
           box-shadow: 0px 2px 1px grey;
   margin-bottom: 5px;
+  z-index: 10;
 }
 
 .wrapper .main #main-display #hud .container .ui-controls {
   text-align: center;
   vertical-align: middle;
-  background-color: #f8db7a;
   font-size: 50px;
   height: 55px;
   padding: 5px;
@@ -108,6 +108,36 @@ textarea {
 
 .wrapper .main #main-display #hud h4 {
   color: white;
+}
+
+.wrapper .main #main-display #hud .technology {
+  margin-top: 5px;
+  padding: 5px;
+  background-color: white;
+}
+
+.wrapper .main #main-display #hud .technology cite {
+  font-size: 0.6em;
+}
+
+.wrapper .main #main-display #hud .technology i:nth-of-type(1) {
+  color: #e34f26;
+}
+
+.wrapper .main #main-display #hud .technology i:nth-of-type(2) {
+  color: #FBBC05;
+}
+
+.wrapper .main #main-display #hud .technology i:nth-of-type(3) {
+  color: #c69;
+}
+
+.wrapper .main #main-display #hud .technology i:nth-of-type(4) {
+  color: #323330;
+}
+
+.wrapper .main #main-display #hud .technology i:nth-of-type(5) {
+  color: #44883e;
 }
 
 .wrapper .main .main-controls {
@@ -147,7 +177,7 @@ textarea {
   /* Stay in place */
   z-index: 1;
   /* Sit on top */
-  padding-top: 100px;
+  padding-top: 200px;
   /* Location of the box */
   left: 0;
   top: 0;

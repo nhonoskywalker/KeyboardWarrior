@@ -33,3 +33,5 @@ https://stackoverflow.com/questions/11266136/how-to-disable-the-backspace-key-fo
 https://stackoverflow.com/questions/270493/how-would-you-make-two-divs-overlap
 https://stackoverflow.com/questions/5257923/how-to-load-local-script-files-as-fallback-in-cases-where-cdn-are-blocked-unavai
 https://stackoverflow.com/questions/17965956/how-to-get-element-by-class-name
+https://stackoverflow.com/questions/7383163/how-to-fallback-to-local-stylesheet-not-script-if-cdn-fails
+http://yepnopejs.com/
