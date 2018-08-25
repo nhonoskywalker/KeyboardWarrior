@@ -96,6 +96,9 @@ textarea {
                             i{
                                 display: inline;
                             }
+                            i:hover{
+                                cursor: pointer;
+                            }
                         }
                     }
                 }
@@ -161,6 +164,12 @@ textarea {
             }
             .btn{
                 margin-top: 20px;
+            }
+            .scores{
+                p{
+                    display: inline;
+                    color: #44883e;
+                }
             }
         }
     }

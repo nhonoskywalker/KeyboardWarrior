@@ -36,7 +36,7 @@ $(document).ready(function(){
         //let arrObj = Array.from(pooler.ObjectSet);
         setInterval(function(){
             if(!paused){
-                if(Array.from(pooler.ObjectSet).filter(x => x.Active == true).length == 2){
+                if(Array.from(pooler.ObjectSet).filter(x => x.Active == true).length == 5){
                     console.log("Game Over");
                    
                     gameOver();
@@ -83,7 +83,6 @@ $(document).ready(function(){
         backSpace(e, 39);
         if(e.keyCode === 8){
             //do not use backspace button function
-            playAgain();
             return false;
         }
         if(e.which == 37 || e.which == 39){
@@ -260,6 +259,8 @@ $(document).ready(function(){
         screen.style.display = "block";
         timer.Start = false;
         paused = true;
+        document.getElementById("hit-go").children[1].textContent = manager.Hit;
+        document.getElementById("miss-go").children[1].textContent = manager.Miss;
        // screen.getElementsByClassName("modal").style.display = "block";
       
     }

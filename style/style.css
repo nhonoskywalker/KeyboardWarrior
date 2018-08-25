@@ -101,6 +101,10 @@ textarea {
   display: inline;
 }
 
+.wrapper .main #main-display #hud .container .ui-controls div i:hover {
+  cursor: pointer;
+}
+
 .wrapper .main #main-display #hud p {
   color: yellow;
   font-size: 1.2em;
@@ -167,6 +171,11 @@ textarea {
 
 .wrapper .main #gameover-screen .btn {
   margin-top: 20px;
+}
+
+.wrapper .main #gameover-screen .scores p {
+  display: inline;
+  color: #44883e;
 }
 
 /* The Modal (background) */
