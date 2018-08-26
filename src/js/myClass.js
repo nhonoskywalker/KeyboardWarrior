@@ -91,6 +91,8 @@ export class CharacterSpawner{
             let node = document.createTextNode(characters.charAt(i)); 
             span.appendChild(node);
             span.style.color = "#535353";
+            span.style.fontSize = "1.2em";
+            span.style.fontWeight = 400;
             para.appendChild(span);  
         }
        

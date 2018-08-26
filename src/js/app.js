@@ -36,16 +36,15 @@ $(document).ready(function(){
         //let arrObj = Array.from(pooler.ObjectSet);
         setInterval(function(){
             if(!paused){
-                if(Array.from(pooler.ObjectSet).filter(x => x.Active == true).length == 18 ||
+                if(Array.from(pooler.ObjectSet).filter(x => x.Active == true).length == 17 ||
                     timer.CountDownInSeconds == 0){
                     console.log("Game Over");
                    
                     gameOver();
                     $("#gameover-screen").hide().fadeIn(800);
                 }
-               
-                console.log(Array.from(pooler.ObjectSet).filter(x => x.Active == true).length);
-                console.log(timer.CountDownInSeconds);
+                // console.log(Array.from(pooler.ObjectSet).filter(x => x.Active == true).length);
+                // console.log(timer.CountDownInSeconds);
             } 
             
         }, 20); //every 0.02s
@@ -276,7 +275,6 @@ $(document).ready(function(){
         paused = true;
         manager.GameSpeed = settings.spawnSpeed;
         textarea.disabled = true;
-        textarea.value ="";
         document.getElementById("timer").children[1].
         textContent = (timer.Minutes < 10? "0":"") + "" + timer.Minutes + ":" + (timer.Seconds <10?"0":"") + timer.Seconds;
     }
@@ -296,6 +294,7 @@ $(document).ready(function(){
             spawner.Spawn(textToType);
             textarea.disabled = false;
             textarea.focus();
+            document.getElementById("manual-container").style.display = "none";
         }else{
             textarea.disabled = true;
         }
