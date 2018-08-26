@@ -153,5 +153,8 @@ export class Timer{
     get Seconds(){
         return this._seconds < 0? 0:this._seconds;
     }
+    get CountDownInSeconds(){
+        return this._countDownInSec;
+    }
     
 }

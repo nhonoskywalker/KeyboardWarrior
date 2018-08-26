@@ -13,9 +13,19 @@
     <title>Keyboard Warrior</title>
 </head>
 <body>
-    <div class="wrapper">
-      <div style="background-color: blueviolet;"></div>
-      <div class="main clip">
+    <div class="wrapper" >
+        <!-- particles.js container --> 
+        <div id="particles-js"></div>
+        <!-- stats - count particles --> 
+        <!-- <div class="count-particles"> 
+            <span class="js-count-particles"></span> particles 
+        </div>  -->
+       
+      <div style="background-color: blueviolet;">
+         
+      </div>
+      <div class="shadow clip">
+      <div class="main">
           <div id="main-display">
               <div id="hud">
                   <div class="container">
@@ -66,9 +76,11 @@
       
                 </textarea>
                 <div>
-
+                    <cite>Created by: Ronald Abellano</cite>
                 </div>
+               
           </div>
+         
           <div class="modal" id="gameover-screen">
                 <div class="modal-content">
                     <strong>Game Over</strong>
@@ -89,7 +101,8 @@
                 </div>
                
           </div>
-      </div>
+        </div> <!--  main -->    
+     </div> <!--  shadow -->  
       <div style="background-color:brown;"></div>  
     </div>
     
@@ -102,6 +115,12 @@
     <script src="/vendors/js/yepnope.js"></script>
     <script src="/src/js/app.min.js"></script>
     <script src="/src/js/animation.js"></script>
+    <!-- particles.js lib - https://github.com/VincentGarreau/particles.js --> 
+    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> 
+    <!-- stats.js lib <script src="http://threejs.org/examples/js/libs/stats.min.js"> -->
+    </script>
+    <script src="/src/js/particles.js"></script>
+   
     <script>
             yepnope([{
             load: 'http:/­/ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js',

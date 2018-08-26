@@ -23,7 +23,7 @@ textarea {
   -ms-grid-columns: 0fr 2fr 0fr;
       grid-template-columns: 0fr 2fr 0fr;
   grid-auto-rows: minmax(300px, auto);
-  background-color: aqua;
+  background-color: white;
   justify-items: stretch;
   -webkit-box-align: stretch;
       -ms-flex-align: stretch;
@@ -35,9 +35,22 @@ textarea {
   background-color: red;
 }
 
+.wrapper .shadow {
+  display: -ms-grid;
+  display: grid;
+  width: 340px;
+  height: 588px;
+  -ms-grid-row-align: center;
+      align-self: center;
+  -ms-grid-column-align: center;
+      justify-self: center;
+}
+
 .wrapper .main {
   display: -ms-grid;
   display: grid;
+  -webkit-box-shadow: 0px 0px 5px gray;
+          box-shadow: 0px 0px 5px gray;
   -ms-grid-rows: 3fr 1fr;
       grid-template-rows: 3fr 1fr;
   width: 320px;
@@ -76,8 +89,8 @@ textarea {
 .wrapper .main #main-display #hud .container #game-info {
   padding: 5px;
   background-color: #b377a9;
-  -webkit-box-shadow: 0px 2px 1px grey;
-          box-shadow: 0px 2px 1px grey;
+  -webkit-box-shadow: 0px 0px 5px grey;
+          box-shadow: 0px 0px 5px grey;
   margin-bottom: 5px;
   z-index: 10;
 }
@@ -161,6 +174,14 @@ textarea {
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
 }
 
+.wrapper .main .main-controls div cite {
+  position: relative;
+  left: 25px;
+  bottom: -30px;
+  color: white;
+  z-index: 3;
+}
+
 .wrapper .main #gameover-screen {
   display: none;
 }
@@ -188,12 +209,10 @@ textarea {
   /* Sit on top */
   padding-top: 200px;
   /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%;
-  /* Full width */
-  height: 100%;
-  /* Full height */
+  left: 20;
+  top: 20;
+  width: 320px;
+  height: 568px;
   overflow: auto;
   /* Enable scroll if needed */
   background-color: black;
@@ -233,4 +252,25 @@ textarea {
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
           clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
 }
+
+/* ---- reset ---- */
+canvas {
+  display: block;
+  vertical-align: bottom;
+}
+
+/* ---- particles.js container ---- */
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  background-image: url("");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-attachment: fixed;
+}
+
+/* ---- stats.js ---- */
 /*# sourceMappingURL=style.css.map */

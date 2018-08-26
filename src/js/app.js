@@ -36,14 +36,16 @@ $(document).ready(function(){
         //let arrObj = Array.from(pooler.ObjectSet);
         setInterval(function(){
             if(!paused){
-                if(Array.from(pooler.ObjectSet).filter(x => x.Active == true).length == 5){
+                if(Array.from(pooler.ObjectSet).filter(x => x.Active == true).length == 18 ||
+                    timer.CountDownInSeconds == 0){
                     console.log("Game Over");
                    
                     gameOver();
                     $("#gameover-screen").hide().fadeIn(800);
                 }
-                //console.log("Counteu " + Array.from(pooler.ObjectSet).filter(x => x.Active == true).length);
-         
+               
+                console.log(Array.from(pooler.ObjectSet).filter(x => x.Active == true).length);
+                console.log(timer.CountDownInSeconds);
             } 
             
         }, 20); //every 0.02s
