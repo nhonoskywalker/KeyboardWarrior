@@ -123,7 +123,7 @@ $(document).ready(function(){
             checkAnswer(lastLine);
         }
 
-        if((e.which >= 65 && e.which <= 90) || (e.which >= 97 && e.which <= 122) || (e.which >= 49 && e.which<=57)){
+        if((e.which >= 65 && e.which <= 96) || (e.which >= 97 && e.which <= 126) || (e.which >= 32 && e.which<=64)){
             try {
                 keyLog.push(String.fromCodePoint(e.which));
                 for(let item of pooler.ObjectSet.values()){
